@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,16 +73,14 @@
   <button onclick="replayBlessings()">Bless Again</button>
   <button id="mute-toggle">🔇</button>
 
-  <!-- YouTube embed for bhajan (autoplay, muted) -->
-  <iframe id="bappa-music" width="0" height="0"
-    src="https://www.youtube.com/embed/gIe7plP20rA?autoplay=1&mute=1"
-    allow="autoplay"></iframe>
+  <!-- Local audio for bhajan -->
+  <audio id="bappaAudio" src="morya-re.mp3" preload="auto"></audio>
 
   <script>
     const modak = document.getElementById("modak");
-    const iframe = document.getElementById('bappa-music');
-    const muteBtn = document.getElementById('mute-toggle');
-    let isMuted = true;
+    const audio = document.getElementById("bappaAudio");
+    const muteBtn = document.getElementById("mute-toggle");
+    let isMuted = false;
 
     function replayBlessings() {
       modak.classList.remove("floatUp");
@@ -94,23 +91,14 @@
     function playWishes() {
       replayBlessings();
       document.querySelector("h1").textContent = "🙏 Happy Vinayaka Chaturthi! 🙏";
-      if (isMuted) {
-        isMuted = false;
-        iframe.src = 'https://www.youtube.com/embed/gIe7plP20rA?autoplay=1&mute=0';
-        document.getElementById('mute-toggle').textContent = '🔊';
-      }
+      audio.play();
     }
 
-document.getElementById('mute-toggle').onclick = () => {
-  isMuted = !isMuted;
-  iframe.src = `https://www.youtube.com/embed/gIe7plP20rA?autoplay=1&mute=${isMuted ? '1' : '0'}`;
-  document.getElementById('mute-toggle').textContent = isMuted ? '🔇' : '🔊';
-};
-      
-      
+    muteBtn.onclick = () => {
+      isMuted = !isMuted;
+      audio.muted = isMuted;
+      muteBtn.textContent = isMuted ? "🔇" : "🔊";
+    };
   </script>
 </body>
 </html>
-
-
-
