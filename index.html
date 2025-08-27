@@ -94,16 +94,23 @@
     function playWishes() {
       replayBlessings();
       document.querySelector("h1").textContent = "🙏 Happy Vinayaka Chaturthi! 🙏";
+      if (isMuted) {
+        isMuted = false;
+        iframe.src = 'https://www.youtube.com/embed/gIe7plP20rA?autoplay=1&mute=0';
+        document.getElementById('mute-toggle').textContent = '🔊';
+      }
     }
 
-    muteBtn.onclick = () => {
-      isMuted = !isMuted;
-      const muteState = isMuted ? "1" : "0";
-      iframe.src = `https://www.youtube.com/embed/gIe7plP20rA?autoplay=1&mute=${muteState}`;
-      muteBtn.textContent = isMuted ? "🔇" : "🔊";
-    };
+document.getElementById('mute-toggle').onclick = () => {
+  isMuted = !isMuted;
+  iframe.src = `https://www.youtube.com/embed/gIe7plP20rA?autoplay=1&mute=${isMuted ? '1' : '0'}`;
+  document.getElementById('mute-toggle').textContent = isMuted ? '🔇' : '🔊';
+};
+      
+      
   </script>
 </body>
 </html>
+
 
 
