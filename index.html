@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
     body {
       margin: 0;
       padding: 0;
-      background: #fce4ec;
+      background: #fff3e0;
       font-family: 'Segoe UI', sans-serif;
       display: flex;
       flex-direction: column;
@@ -16,39 +17,47 @@
       justify-content: center;
       min-height: 100vh;
       text-align: center;
-      color: #d32f2f;
+      color: #bf360c;
       overflow: hidden;
     }
-
     h1 {
       margin-top: 20px;
       font-size: 2.5em;
       animation: fadeIn 2s ease-in-out;
     }
-
     .ganesh {
       width: 300px;
       animation: fadeIn 2s ease-in-out;
     }
-
     .modak {
       width: 80px;
       position: absolute;
       bottom: -100px;
       animation: floatUp 4s ease-out forwards 2s;
     }
-
+    button {
+      margin: 15px 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ff6f00;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #mute-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
     @keyframes fadeIn {
-      0% { opacity: 0; transform: scale(0.8);}
-      100% { opacity: 1; transform: scale(1);}
+      from { opacity: 0; transform: scale(0.8);}
+      to { opacity: 1; transform: scale(1);}
     }
-
     @keyframes floatUp {
-      0% { bottom: -100px; opacity: 0; }
-      50% { opacity: 1; }
-      100% { bottom: 120px; opacity: 1; }
+      from { bottom: -100px; opacity: 0; }
+      to { bottom: 120px; opacity: 1; }
     }
-
     .container {
       position: relative;
     }
@@ -56,16 +65,43 @@
 </head>
 <body>
   <div class="container">
-    <!-- ✅ Lord Ganesh Image -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ganapati_Bappa_Morya.jpg/480px-Ganapati_Bappa_Morya.jpg" 
-         alt="Lord Ganesh" class="ganesh" />
-
-    <!-- ✅ Modak Image -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Ukadiche_Modak.jpg/320px-Ukadiche_Modak.jpg" 
-         alt="Modak" class="modak" />
+    <img src="ganesh-cartoon.png" alt="Lord Ganesh" class="ganesh" />
+    <img src="modak.png" alt="Modak" class="modak" id="modak" />
   </div>
-
   <h1>🙏 Happy Vinayaka Chaturthi! 🙏</h1>
   <p>May Lord Ganesh bless you with wisdom, health, and happiness!</p>
+  <button onclick="playWishes()">Play Wishes</button>
+  <button onclick="replayBlessings()">Bless Again</button>
+  <button id="mute-toggle">🔇</button>
+
+  <!-- YouTube embed for bhajan (autoplay, muted) -->
+  <iframe id="bappa-music" width="0" height="0"
+    src="https://www.youtube.com/embed/gIe7plP20rA?autoplay=1&mute=1"
+    allow="autoplay"></iframe>
+
+  <script>
+    const modak = document.getElementById("modak");
+    const iframe = document.getElementById('bappa-music');
+    const muteBtn = document.getElementById('mute-toggle');
+    let isMuted = true;
+
+    function replayBlessings() {
+      modak.classList.remove("floatUp");
+      void modak.offsetWidth;
+      modak.classList.add("floatUp");
+    }
+
+    function playWishes() {
+      replayBlessings();
+      document.querySelector("h1").textContent = "🙏 Happy Vinayaka Chaturthi! 🙏";
+    }
+
+    muteBtn.onclick = () => {
+      isMuted = !isMuted;
+      const muteState = isMuted ? "1" : "0";
+      iframe.src = `https://www.youtube.com/embed/gIe7plP20rA?autoplay=1&mute=${muteState}`;
+      muteBtn.textContent = isMuted ? "🔇" : "🔊";
+    };
+  </script>
 </body>
 </html>
